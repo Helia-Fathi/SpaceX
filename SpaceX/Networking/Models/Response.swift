@@ -25,7 +25,6 @@ struct Launch: Decodable {
     let flight_number: Int
     let details: String?
     let success: Bool
-    let failures: [String]
     let links: Links
     let date_utc: String
 }
@@ -33,9 +32,16 @@ struct Launch: Decodable {
 struct Links: Decodable {
     let wikipedia: String?
     let patch: Patch
+    let flickr: Flickr
 }
 
 struct Patch: Decodable {
     let small: String
     let large: String
 }
+
+struct Flickr: Decodable {
+    let small: [String]
+    let original: [String]
+}
+
