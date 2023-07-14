@@ -20,10 +20,15 @@
 		AF13D4492A60961600D89825 /* DataBaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D4482A60961600D89825 /* DataBaseProvider.swift */; };
 		AF13D44B2A60963B00D89825 /* Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D44A2A60963B00D89825 /* Mission.swift */; };
 		AF13D4502A61256100D89825 /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D44F2A61256100D89825 /* Mappers.swift */; };
+		AF13D4562A614D5400D89825 /* LaunchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D4552A614D5400D89825 /* LaunchTableViewCell.swift */; };
+		AF13D4582A616DB800D89825 /* MissionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D4572A616DB800D89825 /* MissionCellViewModel.swift */; };
+		AF13D45A2A616E5300D89825 /* LaunchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D4592A616E5300D89825 /* LaunchListViewModel.swift */; };
+		AF13D45D2A61713800D89825 /* LaunchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D45C2A61713800D89825 /* LaunchRepository.swift */; };
+		AF13D4602A6195C800D89825 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = AF13D45F2A6195C800D89825 /* Swinject */; };
+		AF13D4632A61963700D89825 /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D4622A61963700D89825 /* DependencyInjection.swift */; };
 		AFDAA9EB2A602E70001CAC84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDAA9EA2A602E70001CAC84 /* AppDelegate.swift */; };
 		AFDAA9ED2A602E70001CAC84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDAA9EC2A602E70001CAC84 /* SceneDelegate.swift */; };
-		AFDAA9EF2A602E70001CAC84 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDAA9EE2A602E70001CAC84 /* ViewController.swift */; };
-		AFDAA9F22A602E70001CAC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFDAA9F02A602E70001CAC84 /* Main.storyboard */; };
+		AFDAA9EF2A602E70001CAC84 /* LaunchsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDAA9EE2A602E70001CAC84 /* LaunchsListViewController.swift */; };
 		AFDAA9F42A602E72001CAC84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFDAA9F32A602E72001CAC84 /* Assets.xcassets */; };
 		AFDAA9F72A602E72001CAC84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFDAA9F52A602E72001CAC84 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -40,11 +45,15 @@
 		AF13D4482A60961600D89825 /* DataBaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseProvider.swift; sourceTree = "<group>"; };
 		AF13D44A2A60963B00D89825 /* Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mission.swift; sourceTree = "<group>"; };
 		AF13D44F2A61256100D89825 /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
+		AF13D4552A614D5400D89825 /* LaunchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTableViewCell.swift; sourceTree = "<group>"; };
+		AF13D4572A616DB800D89825 /* MissionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionCellViewModel.swift; sourceTree = "<group>"; };
+		AF13D4592A616E5300D89825 /* LaunchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListViewModel.swift; sourceTree = "<group>"; };
+		AF13D45C2A61713800D89825 /* LaunchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRepository.swift; sourceTree = "<group>"; };
+		AF13D4622A61963700D89825 /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
 		AFDAA9E72A602E70001CAC84 /* SpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFDAA9EA2A602E70001CAC84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFDAA9EC2A602E70001CAC84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AFDAA9EE2A602E70001CAC84 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AFDAA9F12A602E70001CAC84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AFDAA9EE2A602E70001CAC84 /* LaunchsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchsListViewController.swift; sourceTree = "<group>"; };
 		AFDAA9F32A602E72001CAC84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AFDAA9F62A602E72001CAC84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AFDAA9F82A602E72001CAC84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,6 +66,7 @@
 			files = (
 				AF13D4442A60930E00D89825 /* RealmSwift in Frameworks */,
 				AF13D4422A60930E00D89825 /* Realm in Frameworks */,
+				AF13D4602A6195C800D89825 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +114,49 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		AF13D4522A614B9400D89825 /* LaunchsList */ = {
+			isa = PBXGroup;
+			children = (
+				AF13D4542A614BD000D89825 /* ViewModel */,
+				AF13D4532A614BCA00D89825 /* View */,
+			);
+			path = LaunchsList;
+			sourceTree = "<group>";
+		};
+		AF13D4532A614BCA00D89825 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AFDAA9EE2A602E70001CAC84 /* LaunchsListViewController.swift */,
+				AF13D4552A614D5400D89825 /* LaunchTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AF13D4542A614BD000D89825 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AF13D4572A616DB800D89825 /* MissionCellViewModel.swift */,
+				AF13D4592A616E5300D89825 /* LaunchListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AF13D45B2A61711800D89825 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				AF13D45C2A61713800D89825 /* LaunchRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		AF13D4612A61961600D89825 /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				AF13D4622A61963700D89825 /* DependencyInjection.swift */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
 		AFDAA9DE2A602E70001CAC84 = {
 			isa = PBXGroup;
 			children = (
@@ -123,12 +176,13 @@
 		AFDAA9E92A602E70001CAC84 /* SpaceX */ = {
 			isa = PBXGroup;
 			children = (
+				AF13D4612A61961600D89825 /* DependencyInjection */,
+				AF13D45B2A61711800D89825 /* Repository */,
+				AF13D4522A614B9400D89825 /* LaunchsList */,
 				AF13D4452A60942300D89825 /* DataBase */,
 				AF13D42B2A6049BC00D89825 /* Networking */,
 				AFDAA9EA2A602E70001CAC84 /* AppDelegate.swift */,
 				AFDAA9EC2A602E70001CAC84 /* SceneDelegate.swift */,
-				AFDAA9EE2A602E70001CAC84 /* ViewController.swift */,
-				AFDAA9F02A602E70001CAC84 /* Main.storyboard */,
 				AFDAA9F32A602E72001CAC84 /* Assets.xcassets */,
 				AFDAA9F52A602E72001CAC84 /* LaunchScreen.storyboard */,
 				AFDAA9F82A602E72001CAC84 /* Info.plist */,
@@ -155,6 +209,7 @@
 			packageProductDependencies = (
 				AF13D4412A60930E00D89825 /* Realm */,
 				AF13D4432A60930E00D89825 /* RealmSwift */,
+				AF13D45F2A6195C800D89825 /* Swinject */,
 			);
 			productName = SpaceX;
 			productReference = AFDAA9E72A602E70001CAC84 /* SpaceX.app */;
@@ -186,6 +241,7 @@
 			mainGroup = AFDAA9DE2A602E70001CAC84;
 			packageReferences = (
 				AF13D4402A60930E00D89825 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				AF13D45E2A6195C800D89825 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = AFDAA9E82A602E70001CAC84 /* Products */;
 			projectDirPath = "";
@@ -203,7 +259,6 @@
 			files = (
 				AFDAA9F72A602E72001CAC84 /* LaunchScreen.storyboard in Resources */,
 				AFDAA9F42A602E72001CAC84 /* Assets.xcassets in Resources */,
-				AFDAA9F22A602E70001CAC84 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,9 +270,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF13D4322A6066C400D89825 /* Response.swift in Sources */,
+				AF13D4562A614D5400D89825 /* LaunchTableViewCell.swift in Sources */,
 				AF13D4302A604B8000D89825 /* NetworkService.swift in Sources */,
+				AF13D4632A61963700D89825 /* DependencyInjection.swift in Sources */,
+				AF13D4582A616DB800D89825 /* MissionCellViewModel.swift in Sources */,
 				AF13D4502A61256100D89825 /* Mappers.swift in Sources */,
-				AFDAA9EF2A602E70001CAC84 /* ViewController.swift in Sources */,
+				AFDAA9EF2A602E70001CAC84 /* LaunchsListViewController.swift in Sources */,
+				AF13D45D2A61713800D89825 /* LaunchRepository.swift in Sources */,
 				AFDAA9EB2A602E70001CAC84 /* AppDelegate.swift in Sources */,
 				AFDAA9ED2A602E70001CAC84 /* SceneDelegate.swift in Sources */,
 				AF13D4492A60961600D89825 /* DataBaseProvider.swift in Sources */,
@@ -227,6 +286,7 @@
 				AF13D43D2A60733B00D89825 /* HTTPMethod.swift in Sources */,
 				AF13D43B2A60731D00D89825 /* LaunchesEndpoint.swift in Sources */,
 				AF13D43F2A6073AA00D89825 /* APIError.swift in Sources */,
+				AF13D45A2A616E5300D89825 /* LaunchListViewModel.swift in Sources */,
 				AF13D4472A60946000D89825 /* DataBaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,14 +294,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AFDAA9F02A602E70001CAC84 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AFDAA9F12A602E70001CAC84 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AFDAA9F52A602E72001CAC84 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -379,9 +431,8 @@
 				INFOPLIST_FILE = SpaceX/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -407,9 +458,8 @@
 				INFOPLIST_FILE = SpaceX/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,6 +505,14 @@
 				kind = branch;
 			};
 		};
+		AF13D45E2A6195C800D89825 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -467,6 +525,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AF13D4402A60930E00D89825 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		AF13D45F2A6195C800D89825 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF13D45E2A6195C800D89825 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

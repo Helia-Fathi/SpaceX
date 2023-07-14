@@ -19,7 +19,7 @@ class LaunchRealm: Object {
     // These will be loaded when the cell is selected
     @objc dynamic var details: String?
     @objc dynamic var wikipedia: String?
-    @objc dynamic var mainImages: [String]?
+    @objc dynamic var mainImages: String?
     
     override static func primaryKey() -> String? {
         return "flightNumber"

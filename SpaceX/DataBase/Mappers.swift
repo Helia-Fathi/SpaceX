@@ -9,36 +9,26 @@ import Foundation
 
 extension DataBaseProvider {
     
-    func mapToLaunchObjects(_ launchList: [Launch]) -> [LaunchRealm] {
-        return launchList.map { luanch in
-            let realmLaunch = LaunchRealm()
-            realmLaunch.name = luanch.name
-            realmLaunch.flightNumber = realmLaunch.flightNumber
-            realmLaunch.success = luanch.success
-            realmLaunch.smallImageURL = luanch.links.patch.small
-            realmLaunch.dateUTC = luanch.date_utc
-            realmLaunch.details = luanch.details
-            realmLaunch.wikipedia = luanch.links.wikipedia
-            realmLaunch.mainImages = luanch.links.flickr.original
-            return realmLaunch
+    func mapToLaunchObjects(_ launchList: [SpaceXResponse]) -> [LaunchRealm] {
+        return launchList.flatMap { launch in
+            return launch.docs.map { doc in
+                let realmLaunch = LaunchRealm()
+                realmLaunch.name = doc.name
+                realmLaunch.flightNumber = doc.flight_number
+                realmLaunch.success = doc.success ?? false
+                realmLaunch.smallImageURL = doc.links.patch.small
+                realmLaunch.dateUTC = doc.date_utc
+                realmLaunch.details = doc.details
+                realmLaunch.wikipedia = doc.links.wikipedia
+                realmLaunch.mainImages = doc.links.flickr.original.first
+                return realmLaunch
+            }
         }
     }
-    
-    func mapToLaunchLists(launchRealm: [LaunchRealm], includeDetails: Bool = false) -> [Launch] {
-        return launchRealm.map { realm in
-            let flickr = Flickr(small: [], original: includeDetails ? realm.mainImages ?? [] : [])
-            let patch = Patch(small: includeDetails ? realm.smallImageURL ?? "" : "", large: "")
-            let links = Links(wikipedia: includeDetails ? realm.wikipedia : nil, patch: patch, flickr: flickr)
 
-            return Launch(
-                name: realm.name,
-                flight_number: realm.flightNumber,
-                details: includeDetails ? realm.details : nil,
-                success: realm.success,
-                links: links,
-                date_utc: realm.dateUTC ?? ""
-            )
-        }
-    }
     
+    func mapToMissionCellViewModels(launchRealms: [LaunchRealm]) -> [MissionCellViewModel] {
+        return launchRealms.map { MissionCellViewModel(launch: $0) }
+    }
+
 }

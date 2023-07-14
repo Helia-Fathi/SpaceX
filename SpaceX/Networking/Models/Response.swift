@@ -24,7 +24,7 @@ struct Launch: Decodable {
     let name: String
     let flight_number: Int
     let details: String?
-    let success: Bool
+    let success: Bool?
     let links: Links
     let date_utc: String
 }

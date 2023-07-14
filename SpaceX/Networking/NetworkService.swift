@@ -11,6 +11,8 @@ import Combine
 
 protocol NetworkServiceProtocol {
     func request<T: Decodable>(_ endpoint: APIEndpoint) -> AnyPublisher<T, APIError>
+//    func request<T: Decodable>(_ endpoint: APIEndpoint, completion: @escaping (Result<T, APIError>) -> Void)
+    
 }
 
 class NetworkService: NetworkServiceProtocol {
@@ -24,18 +26,19 @@ class NetworkService: NetworkServiceProtocol {
     
     func request<T: Decodable>(_ endpoint: APIEndpoint) -> AnyPublisher<T, APIError> {
         let url = baseURL.appendingPathComponent(endpoint.path)
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.headers
         request.httpBody = endpoint.body
-        
+        request.timeoutInterval = TimeInterval(120)
+
         return urlSession.dataTaskPublisher(for: request)
             .tryMap { output in
                 guard let response = output.response as? HTTPURLResponse else {
                     throw APIError.noResponse
                 }
-                
+
                 guard (200...299).contains(response.statusCode) else {
                     switch response.statusCode {
                     case 400: throw APIError.badRequest
@@ -46,7 +49,7 @@ class NetworkService: NetworkServiceProtocol {
                     default: throw APIError.unknown
                     }
                 }
-                
+
                 return output.data
             }
             .decode(type: T.self, decoder: JSONDecoder())
