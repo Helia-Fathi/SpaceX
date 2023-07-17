@@ -20,8 +20,9 @@ class LaunchsListViewController: UIViewController {
         launchsListTableView.delegate = self
         launchsListTableView.dataSource = self
         
-        viewModel.fetchLaunchesFromDB()
+//        viewModel.fetchLaunchesFromDB()
 //        viewModel.fetchAndSaveLaunches(pageNumber: 1)
+        viewModel.fetchLaunches()
         viewModel.$isLoading
             .filter { !$0 }
             .receive(on: DispatchQueue.main)

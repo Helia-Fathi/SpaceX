@@ -9,7 +9,8 @@ import Foundation
 
 protocol DataBaseProviderProtocol {
     func saveLaunches(launches: [SpaceXResponse])
-    func fetchLaunches() -> [MissionCellViewModel]
+    func fetchLaunches(offset: Int, limit: Int) -> [MissionCellViewModel]?
+//    func fetchLaunches() -> [MissionCellViewModel]
 //    func fetchLaunchDetails(flightNumber: Int) -> Launch?
     func markLaunch(flightNumber: Int, isMarked: Bool)
 }
@@ -27,16 +28,27 @@ class DataBaseProvider: DataBaseProviderProtocol {
         }
     }
     
-    func fetchLaunches() -> [MissionCellViewModel] {
-        var launchList = [MissionCellViewModel]()
+//    func fetchLaunches() -> [MissionCellViewModel] {
+//        var launchList = [MissionCellViewModel]()
+//        do {
+//            let launch = try dataBaseManager.fetchAll(type: LaunchRealm.self)
+//            launchList = mapToMissionCellViewModels(launchRealms: Array(launch!))
+//            return launchList
+//        } catch let error as NSError {
+//            print("\(error.description)")
+//        }
+//        return launchList
+//    }
+    
+    func fetchLaunches(offset: Int, limit: Int) -> [MissionCellViewModel]? {
         do {
-            let launch = try dataBaseManager.fetchAll(type: LaunchRealm.self)
-            launchList = mapToMissionCellViewModels(launchRealms: Array(launch!))
-            return launchList
+            let launches: [LaunchRealm] = try self.dataBaseManager.fetchAll(type: LaunchRealm.self, offset: offset, limit: limit)
+            let missionCellViewModels = mapToMissionCellViewModels(launchRealms: launches)
+            return missionCellViewModels
         } catch let error as NSError {
-            print("\(error.description)")
+            print("Couldn't fetch: \(error)")
         }
-        return launchList
+        return nil
     }
     
 //    func fetchLaunchDetails(flightNumber: Int) -> Launch? {

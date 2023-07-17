@@ -49,6 +49,9 @@ class NetworkService: NetworkServiceProtocol {
                     default: throw APIError.unknown
                     }
                 }
+                print("khoda : \(output.data)")
+                let json = try JSONSerialization.jsonObject(with: output.data, options: [])
+                print("ey babababa", json)
 
                 return output.data
             }

@@ -14,13 +14,13 @@ extension DataBaseProvider {
             return launch.docs.map { doc in
                 let realmLaunch = LaunchRealm()
                 realmLaunch.name = doc.name
-                realmLaunch.flightNumber = doc.flight_number
+//                realmLaunch.flightNumber = doc.flight_number
                 realmLaunch.success = doc.success ?? false
                 realmLaunch.smallImageURL = doc.links.patch.small
-                realmLaunch.dateUTC = doc.date_utc
-                realmLaunch.details = doc.details
+//                realmLaunch.dateUTC = doc.date_utc
+//                realmLaunch.details = doc.details
                 realmLaunch.wikipedia = doc.links.wikipedia
-                realmLaunch.mainImages = doc.links.flickr.original.first
+//                realmLaunch.mainImages = doc.links.flickr.original.first
                 return realmLaunch
             }
         }
