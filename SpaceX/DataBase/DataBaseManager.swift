@@ -20,7 +20,6 @@ protocol DataBaseManagerProtocol {
     func update(block: () -> Void) throws
 }
 
-
 final class DataBaseManager: DataBaseManagerProtocol {
     
     private lazy var realm: Realm = {
@@ -101,5 +100,5 @@ final class DataBaseManager: DataBaseManagerProtocol {
             print("Error updating object in realm: \(error.localizedDescription)")
         }
     }
-
+    
 }

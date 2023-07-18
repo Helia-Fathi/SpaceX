@@ -1,5 +1,5 @@
 //
-//  LaunchDetailsViewModel.swift
+//  LaunchDetailsModel.swift
 //  SpaceX
 //
 //  Created by Helia Fathi on 7/15/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LaunchDetailsViewModel {
+struct LaunchDetailsModel {
     let name: String
     let details: String
     let mainImage: String?

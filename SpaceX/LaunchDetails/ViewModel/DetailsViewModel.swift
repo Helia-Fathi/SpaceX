@@ -1,5 +1,5 @@
 //
-//  DetailsModel.swift
+//  DetailsViewModel.swift
 //  SpaceX
 //
 //  Created by Helia Fathi on 7/18/23.
@@ -7,9 +7,10 @@
 
 import Foundation
 
-class DetailsModel: ObservableObject {
+class DetailsViewModel: ObservableObject {
     
     @Inject var dataBase: DataBaseProviderProtocol
+    @Inject var formatDate: DateFormatterProtocol
     
     func saveMissionAsMark(flightNumber: String) {
         let mission = MarkMissionModel(flightNumber: flightNumber)
@@ -24,4 +25,7 @@ class DetailsModel: ObservableObject {
         return self.dataBase.checkIsMark(flightNumber: flightNumber)
     }
     
+    func formatTheDate(from originalDateString: String) -> String? {
+        return formatDate.formatDate(from: originalDateString)
+    }
 }

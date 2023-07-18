@@ -39,7 +39,7 @@ class DependencyInjection{
             NetworkService()
         }.inObjectScope(.container)
         
-//        // MARK: - Realm
+        // MARK: - Realm
         container.register(DataBaseProviderProtocol.self) { _ in
             DataBaseProvider()
         }.inObjectScope(.container)
@@ -48,7 +48,11 @@ class DependencyInjection{
             DataBaseManager()
         }.inObjectScope(.container)
         
+        //MARK: - Date Formater
+        container.register(DateFormatterProtocol.self) { _ in
+            DateUtility()
+        }.inObjectScope(.container)
+        
         return container
     }
-    
 }

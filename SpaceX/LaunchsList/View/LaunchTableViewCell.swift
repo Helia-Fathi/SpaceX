@@ -12,6 +12,7 @@ class LaunchTableViewCell: UITableViewCell {
     
     static let identifier = String(describing: LaunchTableViewCell.self)
     let cellMargins = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    var viewmodel = LaunchViewModel()
     
     private var photoInteractor: PhotoInteractor?
     var currentIndexPath: IndexPath?
@@ -31,7 +32,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,7 +41,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,7 +50,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .center
         label.layer.masksToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -66,19 +67,10 @@ class LaunchTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private let isMarked: UIImageView = {
-        var imageView = UIImageView()
-        imageView.isUserInteractionEnabled = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.layoutMargins = cellMargins
+        contentView.backgroundColor = UIColor(named: "DarkNight")
         setUp()
     }
     
@@ -87,7 +79,6 @@ class LaunchTableViewCell: UITableViewCell {
     }
     
     func setUp() {
-        contentView.addSubview(isMarked)
         contentView.addSubview(missionIcon)
         contentView.addSubview(successOrFail)
         contentView.addSubview(flightNumber)
@@ -96,12 +87,7 @@ class LaunchTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            isMarked.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            isMarked.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            isMarked.widthAnchor.constraint(equalToConstant: 24),
-            isMarked.heightAnchor.constraint(equalToConstant: 16),
-            
-            missionIcon.leadingAnchor.constraint(equalTo: isMarked.trailingAnchor, constant: 4),
+            missionIcon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             missionIcon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             missionIcon.widthAnchor.constraint(equalToConstant: 60),
             missionIcon.heightAnchor.constraint(equalToConstant: 60),
@@ -115,7 +101,7 @@ class LaunchTableViewCell: UITableViewCell {
             minorDetails.leadingAnchor.constraint(equalTo: missionIcon.trailingAnchor, constant: 16),
             minorDetails.widthAnchor.constraint(equalToConstant: 160),
             minorDetails.heightAnchor.constraint(equalToConstant: 24),
- 
+            
             successOrFail.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             successOrFail.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             successOrFail.widthAnchor.constraint(equalToConstant: 40),
@@ -127,7 +113,7 @@ class LaunchTableViewCell: UITableViewCell {
             launchDate.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         missionIcon.image = nil
@@ -136,16 +122,13 @@ class LaunchTableViewCell: UITableViewCell {
         minorDetails.text = nil
         launchDate.text = nil
         successOrFail.image = nil
-        isMarked.image = nil
     }
     
     func configure(with viewModel: MissionCellViewModel) {
         flightNumber.text = viewModel.flightNumber
         minorDetails.text = viewModel.details
-        launchDate.text = viewModel.dateUTC
+        launchDate.text = viewmodel.formatTheDate(from: viewModel.dateUTC!)
         successOrFail.image = viewModel.success ? UIImage(named: "Successed") : UIImage(named: "Failed")
-        isMarked.isHidden = !viewModel.isMarked
-        isMarked.image = viewModel.isMarked ? UIImage(named: "mark") : nil
     }
     
     func updateImage(with interactor: PhotoInteractor, for indexPath: IndexPath) {
@@ -163,5 +146,5 @@ class LaunchTableViewCell: UITableViewCell {
             }
         })
     }
-
+    
 }

@@ -10,24 +10,20 @@ import UIKit
 
 class LaunchDetailsViewController: UIViewController {
     
-    var detailsModel = DetailsModel()
-
+    var detailsModel = DetailsViewModel()
+    var photoInteractor: PhotoInteractor?
+    @Published var details: LaunchDetailsModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "DarkNight")
         setupViews()
         setupConstraints()
         wikiLink.isHidden = true
         missionName.text = details?.name
         misionDetails.text = details?.details
-        launchDate.text = details?.dateUTC
-        if details?.wikiLink != nil {
-            wikiLink.isHidden = false
-        }
-        
+        launchDate.text = detailsModel.formatTheDate(from: (details?.dateUTC)!)
     }
-    
-    @Published var details: LaunchDetailsViewModel?
     
     private let missionMainImage: UIImageView = {
         var imageView = UIImageView()
@@ -43,7 +39,8 @@ class LaunchDetailsViewController: UIViewController {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .white
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -52,7 +49,8 @@ class LaunchDetailsViewController: UIViewController {
         let text = UITextView()
         text.isUserInteractionEnabled = false
         text.textAlignment = .left
-        text.textColor = .black
+        text.textColor = .white
+        text.backgroundColor = UIColor(named: "DarkNight")
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
@@ -61,7 +59,7 @@ class LaunchDetailsViewController: UIViewController {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .center
         label.layer.masksToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +71,7 @@ class LaunchDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .black
         button.tintColor = .white
+        button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(changeMark), for: .touchUpInside)
         return button
     }()
@@ -82,44 +81,42 @@ class LaunchDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .black
         button.tintColor = .white
+        button.setTitle("Check Out on Wiki!", for: .normal)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(visitTheLink), for: .touchUpInside)
         return button
     }()
     
     @objc private func changeMark() {
-        guard let flightNumber = details?.name else {
-            return
-        }
-                
-        if details?.isMarked == false && isMarked.titleLabel?.text == "Mark It!"{
+        guard let flightNumber = details?.name else { return }
+        if details?.isMarked == false && isMarked.titleLabel?.text == "Mark It!" {
             detailsModel.saveMissionAsMark(flightNumber: flightNumber)
             isMarked.setTitle("Already Marked!", for: .normal)
-            
         } else {
             detailsModel.deleteMission(flightNumber: flightNumber)
+            isMarked.setTitle("Mark It!", for: .normal)
         }
     }
-
     
     @objc private func visitTheLink() {
-        guard let urlString = self.details?.wikiLink, let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return
-        }
-
+        guard let urlString = self.details?.wikiLink, let url = URL(string: urlString) else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("details ine", details)
+        if details?.wikiLink == nil {
+            wikiLink.isHidden = true
+        } else {
+            wikiLink.isHidden = false
+        }
         guard let num = self.details?.name else { return }
-        if detailsModel.checkIsMarked(flightNumber: num ) {
+        if detailsModel.checkIsMarked(flightNumber: num) {
             isMarked.setTitle("Already Marked!", for: .normal)
         } else {
             isMarked.setTitle("Mark It!", for: .normal)
         }
     }
-
     
     private func setupViews() {
         view.addSubview(missionMainImage)
@@ -132,41 +129,39 @@ class LaunchDetailsViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-
+            
             missionMainImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
-            missionMainImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            missionMainImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            missionMainImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            missionMainImage.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             missionMainImage.heightAnchor.constraint(equalToConstant: 240),
-
+            
             missionName.topAnchor.constraint(equalTo: missionMainImage.bottomAnchor, constant: 8),
-            missionName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            missionName.heightAnchor.constraint(equalToConstant: 20),
-
+            missionName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            missionName.heightAnchor.constraint(equalToConstant: 80),
+            
             launchDate.topAnchor.constraint(equalTo: missionMainImage.bottomAnchor, constant: 8),
             launchDate.leadingAnchor.constraint(equalTo: missionName.trailingAnchor, constant: 8),
-            launchDate.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            launchDate.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            launchDate.widthAnchor.constraint(equalToConstant: 120),
             launchDate.heightAnchor.constraint(equalTo: missionName.heightAnchor),
-
+            
             misionDetails.topAnchor.constraint(equalTo: missionName.bottomAnchor, constant: 8),
-            misionDetails.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            misionDetails.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            misionDetails.bottomAnchor.constraint(equalTo: wikiLink.topAnchor, constant: -8),
-
-            isMarked.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            isMarked.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
-            isMarked.heightAnchor.constraint(equalToConstant: 50),
-            isMarked.widthAnchor.constraint(equalToConstant: view.bounds.width / 2 - 12),
-
-            wikiLink.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            wikiLink.leadingAnchor.constraint(equalTo: isMarked.trailingAnchor, constant: 8),
-            wikiLink.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            misionDetails.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            misionDetails.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            misionDetails.heightAnchor.constraint(equalToConstant: 200),
+            
+            wikiLink.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            wikiLink.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             wikiLink.heightAnchor.constraint(equalToConstant: 50),
-            wikiLink.widthAnchor.constraint(equalTo: isMarked.widthAnchor)
+            wikiLink.bottomAnchor.constraint(equalTo: isMarked.topAnchor, constant: -8),
+            
+            isMarked.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            isMarked.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            isMarked.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            isMarked.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     
-        var photoInteractor: PhotoInteractor?
-        
     func updateImage(with interactor: PhotoInteractor) {
         self.photoInteractor = interactor
         self.photoInteractor?.downloadPhoto(completion: { [weak self] (image, error) in

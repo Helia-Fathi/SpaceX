@@ -25,10 +25,11 @@
 		AF13D45A2A616E5300D89825 /* LaunchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D4592A616E5300D89825 /* LaunchListViewModel.swift */; };
 		AF13D4602A6195C800D89825 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = AF13D45F2A6195C800D89825 /* Swinject */; };
 		AF13D4632A61963700D89825 /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF13D4622A61963700D89825 /* DependencyInjection.swift */; };
+		AF8A11532A6703CD00863A85 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8A11522A6703CD00863A85 /* DateUtility.swift */; };
 		AFA741D32A667983002806D6 /* Cashe.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA741D22A667983002806D6 /* Cashe.swift */; };
-		AFA741D52A669E44002806D6 /* DetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA741D42A669E44002806D6 /* DetailsModel.swift */; };
+		AFA741D52A669E44002806D6 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA741D42A669E44002806D6 /* DetailsViewModel.swift */; };
 		AFC59F452A6308B80091BCE8 /* LaunchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC59F442A6308B80091BCE8 /* LaunchDetailsViewController.swift */; };
-		AFC59F472A63098F0091BCE8 /* LaunchDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC59F462A63098F0091BCE8 /* LaunchDetailsViewModel.swift */; };
+		AFC59F472A63098F0091BCE8 /* LaunchDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC59F462A63098F0091BCE8 /* LaunchDetailsModel.swift */; };
 		AFDAA9EB2A602E70001CAC84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDAA9EA2A602E70001CAC84 /* AppDelegate.swift */; };
 		AFDAA9ED2A602E70001CAC84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDAA9EC2A602E70001CAC84 /* SceneDelegate.swift */; };
 		AFDAA9EF2A602E70001CAC84 /* LaunchsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDAA9EE2A602E70001CAC84 /* LaunchsListViewController.swift */; };
@@ -52,10 +53,11 @@
 		AF13D4572A616DB800D89825 /* MissionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionCellViewModel.swift; sourceTree = "<group>"; };
 		AF13D4592A616E5300D89825 /* LaunchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListViewModel.swift; sourceTree = "<group>"; };
 		AF13D4622A61963700D89825 /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
+		AF8A11522A6703CD00863A85 /* DateUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
 		AFA741D22A667983002806D6 /* Cashe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cashe.swift; sourceTree = "<group>"; };
-		AFA741D42A669E44002806D6 /* DetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModel.swift; sourceTree = "<group>"; };
+		AFA741D42A669E44002806D6 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		AFC59F442A6308B80091BCE8 /* LaunchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchDetailsViewController.swift; sourceTree = "<group>"; };
-		AFC59F462A63098F0091BCE8 /* LaunchDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchDetailsViewModel.swift; sourceTree = "<group>"; };
+		AFC59F462A63098F0091BCE8 /* LaunchDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchDetailsModel.swift; sourceTree = "<group>"; };
 		AFDAA9E72A602E70001CAC84 /* SpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFDAA9EA2A602E70001CAC84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFDAA9EC2A602E70001CAC84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,15 @@
 			path = DependencyInjection;
 			sourceTree = "<group>";
 		};
+		AF8A11512A6703AC00863A85 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AFA741D22A667983002806D6 /* Cashe.swift */,
+				AF8A11522A6703CD00863A85 /* DateUtility.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		AFC59F412A63084F0091BCE8 /* LaunchDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,8 +178,8 @@
 		AFC59F422A63087A0091BCE8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				AFC59F462A63098F0091BCE8 /* LaunchDetailsViewModel.swift */,
-				AFA741D42A669E44002806D6 /* DetailsModel.swift */,
+				AFC59F462A63098F0091BCE8 /* LaunchDetailsModel.swift */,
+				AFA741D42A669E44002806D6 /* DetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -200,6 +211,7 @@
 		AFDAA9E92A602E70001CAC84 /* SpaceX */ = {
 			isa = PBXGroup;
 			children = (
+				AF8A11512A6703AC00863A85 /* Utilities */,
 				AF13D4612A61961600D89825 /* DependencyInjection */,
 				AFC59F412A63084F0091BCE8 /* LaunchDetails */,
 				AF13D4522A614B9400D89825 /* LaunchsList */,
@@ -210,7 +222,6 @@
 				AFDAA9F32A602E72001CAC84 /* Assets.xcassets */,
 				AFDAA9F52A602E72001CAC84 /* LaunchScreen.storyboard */,
 				AFDAA9F82A602E72001CAC84 /* Info.plist */,
-				AFA741D22A667983002806D6 /* Cashe.swift */,
 			);
 			path = SpaceX;
 			sourceTree = "<group>";
@@ -295,12 +306,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF13D4322A6066C400D89825 /* Response.swift in Sources */,
-				AFC59F472A63098F0091BCE8 /* LaunchDetailsViewModel.swift in Sources */,
+				AFC59F472A63098F0091BCE8 /* LaunchDetailsModel.swift in Sources */,
+				AF8A11532A6703CD00863A85 /* DateUtility.swift in Sources */,
 				AF13D4562A614D5400D89825 /* LaunchTableViewCell.swift in Sources */,
 				AF13D4302A604B8000D89825 /* NetworkService.swift in Sources */,
 				AF13D4632A61963700D89825 /* DependencyInjection.swift in Sources */,
 				AF13D4582A616DB800D89825 /* MissionCellViewModel.swift in Sources */,
-				AFA741D52A669E44002806D6 /* DetailsModel.swift in Sources */,
+				AFA741D52A669E44002806D6 /* DetailsViewModel.swift in Sources */,
 				AFA741D32A667983002806D6 /* Cashe.swift in Sources */,
 				AF13D4502A61256100D89825 /* Mappers.swift in Sources */,
 				AFDAA9EF2A602E70001CAC84 /* LaunchsListViewController.swift in Sources */,

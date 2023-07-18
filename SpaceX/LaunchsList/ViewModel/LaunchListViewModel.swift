@@ -9,16 +9,17 @@ import Foundation
 import Combine
 
 class LaunchViewModel: ObservableObject {
+    
     @Published var launchData: [MissionCellViewModel] = []
     @Published var isLoading = false
-    var currentPageNumber = 1
     
+    var currentPageNumber = 1
     var cancellables: Set<AnyCancellable> = []
     
     @Inject var network: NetworkServiceProtocol
-    private var myDispatcher = DispatchQueue.global(qos: .background)
+    @Inject var formatDate: DateFormatterProtocol
     
-    func fetchAndSaveLaunches(completion: @escaping (Result<SpaceXResponse, Error>) -> Void) {
+    func fetchData(completion: @escaping (Result<SpaceXResponse, Error>) -> Void) {
         let query = [
             "query": ["upcoming": false],
             "options": ["limit": 50, "page": currentPageNumber, "sort": ["flight_number": "desc"]]
@@ -27,7 +28,7 @@ class LaunchViewModel: ObservableObject {
             network.request(endpoint: LaunchesEndpoint.fetchLaunches(query: query)) { [self] result in
                 switch result {
                 case .success(let data):
-                    if let responseString = String(data: data, encoding: .utf8) {
+                    if String(data: data, encoding: .utf8) != nil {
                         guard let responseDictionary = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
                             return
                         }
@@ -48,4 +49,9 @@ class LaunchViewModel: ObservableObject {
             }
         }
     }
+    
+    func formatTheDate(from originalDateString: String) -> String? {
+        return formatDate.formatDate(from: originalDateString)
+    }
+    
 }

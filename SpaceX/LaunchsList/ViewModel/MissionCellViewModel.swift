@@ -9,6 +9,7 @@ import Foundation
 
 struct MissionCellViewModel {
     let flightNumber: String
+    let name: String
     let details: String
     let success: Bool
     let smallImageURL: String?
@@ -20,6 +21,7 @@ struct MissionCellViewModel {
     init?(response: [String: Any]) {
         guard let flightNumber = response["flight_number"] as? Int else { return nil }
         self.flightNumber = "Flight \(flightNumber)"
+        self.name = response["name"] as? String ?? "No Name"
         self.details = response["details"] as? String ?? "No details available"
         self.success = response["success"] as? Bool ?? false
         if let links = response["links"] as? [String: Any] {

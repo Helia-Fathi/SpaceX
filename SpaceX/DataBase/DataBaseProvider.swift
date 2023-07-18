@@ -29,10 +29,10 @@ class DataBaseProvider: DataBaseProviderProtocol {
     func deleteMark(flightNumber: String) {
         dataBaseManager.deleteObject(type: LaunchRealm.self, by: String(flightNumber))
     }
-
+    
     func checkIsMark(flightNumber: String) -> Bool {
         let markedMission = dataBaseManager.getObject(type: LaunchRealm.self, key: flightNumber)
         return markedMission != nil
     }
-
+    
 }
