@@ -7,28 +7,17 @@
 
 import Foundation
 
-//extension DataBaseProvider {
-//
-//    func mapToLaunchObjects(_ launchList: [SpaceXResponse]) -> [LaunchRealm] {
-//        return launchList.flatMap { launch in
-//            return launch.docs.map { doc in
-//                let realmLaunch = LaunchRealm()
-//                realmLaunch.name = doc.name
-////                realmLaunch.flightNumber = doc.flight_number
-//                realmLaunch.success = doc.success ?? false
-//                realmLaunch.smallImageURL = doc.links.patch.small
-////                realmLaunch.dateUTC = doc.date_utc
-////                realmLaunch.details = doc.details
-//                realmLaunch.wikipedia = doc.links.wikipedia
-////                realmLaunch.mainImages = doc.links.flickr.original.first
-//                return realmLaunch
-//            }
-//        }
-//    }
-//
-//
-//    func mapToMissionCellViewModels(launchRealms: [LaunchRealm]) -> [MissionCellViewModel] {
-//        return launchRealms.map { MissionCellViewModel(launch: $0) }
-//    }
-//
-//}
+extension DataBaseProvider {
+
+    func mapToMissionObjects(_ launchList: [MarkMissionModel]) -> [LaunchRealm] {
+           return launchList.compactMap { launch in
+               let realmLaunch = LaunchRealm()
+               realmLaunch.flightNumber = launch.flightNumber
+               return realmLaunch
+           }
+       }
+
+       func mapToMissionModels(launchRealms: [LaunchRealm]) -> [MarkMissionModel] {
+           return launchRealms.map { MarkMissionModel(flightNumber: $0.flightNumber) }
+       }
+}

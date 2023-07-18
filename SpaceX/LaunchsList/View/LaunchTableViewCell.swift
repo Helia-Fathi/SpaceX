@@ -13,12 +13,14 @@ class LaunchTableViewCell: UITableViewCell {
     static let identifier = String(describing: LaunchTableViewCell.self)
     let cellMargins = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     
+    private var photoInteractor: PhotoInteractor?
+    var currentIndexPath: IndexPath?
+    
     private let missionIcon: UIImageView = {
         var imageView = UIImageView()
         imageView.isUserInteractionEnabled = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .cyan
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,8 +31,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.backgroundColor = .red
-        label.textColor = .yellow
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,8 +40,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.backgroundColor = .green
-        label.textColor = .brown
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,8 +49,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.backgroundColor = .purple
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
         label.layer.masksToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +70,6 @@ class LaunchTableViewCell: UITableViewCell {
         var imageView = UIImageView()
         imageView.isUserInteractionEnabled = false
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: "mark")
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -119,21 +117,21 @@ class LaunchTableViewCell: UITableViewCell {
             minorDetails.heightAnchor.constraint(equalToConstant: 24),
  
             successOrFail.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            successOrFail.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
-            successOrFail.widthAnchor.constraint(equalToConstant: 20),
-            successOrFail.heightAnchor.constraint(equalToConstant: 20),
+            successOrFail.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            successOrFail.widthAnchor.constraint(equalToConstant: 40),
+            successOrFail.heightAnchor.constraint(equalToConstant: 40),
             
             launchDate.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            launchDate.topAnchor.constraint(equalTo: successOrFail.bottomAnchor, constant: 8),
+            launchDate.topAnchor.constraint(equalTo: successOrFail.bottomAnchor),
             launchDate.widthAnchor.constraint(equalToConstant: 104),
             launchDate.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
 
-
     override func prepareForReuse() {
         super.prepareForReuse()
         missionIcon.image = nil
+        photoInteractor?.cancelDownloading()
         flightNumber.text = nil
         minorDetails.text = nil
         launchDate.text = nil
@@ -145,9 +143,25 @@ class LaunchTableViewCell: UITableViewCell {
         flightNumber.text = viewModel.flightNumber
         minorDetails.text = viewModel.details
         launchDate.text = viewModel.dateUTC
-        successOrFail.image = viewModel.success ? UIImage(named: "success") : UIImage(named: "fail")
+        successOrFail.image = viewModel.success ? UIImage(named: "Successed") : UIImage(named: "Failed")
         isMarked.isHidden = !viewModel.isMarked
         isMarked.image = viewModel.isMarked ? UIImage(named: "mark") : nil
+    }
+    
+    func updateImage(with interactor: PhotoInteractor, for indexPath: IndexPath) {
+        self.photoInteractor = interactor
+        self.photoInteractor?.downloadPhoto(completion: { [weak self] (image, error) in
+            guard let strongSelf = self else { return }
+            if let error = error as NSError?, error.code != NSURLErrorCancelled {
+                print("Error downloading photo: \(error)")
+            } else if let image = image {
+                DispatchQueue.main.async {
+                    if strongSelf.currentIndexPath == indexPath {
+                        strongSelf.missionIcon.image = image
+                    }
+                }
+            }
+        })
     }
 
 }

@@ -10,6 +10,7 @@ import UIKit
 class LaunchsListViewController: UIViewController {
 
     var viewModel = LaunchViewModel()
+    var refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,16 +18,17 @@ class LaunchsListViewController: UIViewController {
         
         launchsListTableView.delegate = self
         launchsListTableView.dataSource = self
+        refreshControl.addTarget(self, action: #selector(refreshPage(_:)), for: .valueChanged)
 
-        self.viewModel.fetchAndSaveLaunches(pageNumber: 4) { resual in
+        self.viewModel.fetchAndSaveLaunches() { resual in
             switch resual {
             case .success(let data):
-                print(data.docs)
+                print("vania")
             case .failure(_):
                 print("helia")
             }
         }
-        
+        launchsListTableView.refreshControl = refreshControl
         viewModel.$isLoading
             .filter { !$0 }
             .receive(on: DispatchQueue.main)
@@ -44,7 +46,11 @@ class LaunchsListViewController: UIViewController {
         launchsListTableView.reloadData()
         configUIElements()
     }
-
+    
+    @objc func refreshPage(_: AnyObject) {
+        self.refreshControl.endRefreshing()
+    }
+    
     private lazy var launchsListTableView: UITableView = {
         let table = UITableView()
         table.showsHorizontalScrollIndicator = false
@@ -76,15 +82,34 @@ extension LaunchsListViewController: UITableViewDelegate, UITableViewDataSource 
             fatalError("LaunchTableViewCell is invalid")
         }
         let launch = viewModel.launchData[indexPath.row]
+        let photoInteractor = PhotoInteractorImpl(createDate: launch.dateUTC!, thumbUrl: URL(string: launch.smallImageURL!)!, filename: launch.flightNumber)
+        cell.currentIndexPath = indexPath
         cell.configure(with: launch)
+        cell.updateImage(with: photoInteractor, for: indexPath)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let launch = viewModel.launchData[indexPath.row]
+        let photoInteractor = PhotoInteractorImpl(createDate: launch.dateUTC!, thumbUrl: URL(string: launch.mainImage!)!, filename: "\(launch.flightNumber)-main")
+
         let launchDetailsViewController = LaunchDetailsViewController()
-        launchDetailsViewController.details = LaunchDetailsViewModel(name: launch.flightNumber, details: launch.details, mainImage: launch.smallImageURL, dateUTC: launch.dateUTC, isMarked: launch.isMarked, wikiLink: nil)
-        let navigationController = UINavigationController(rootViewController: self)
+        launchDetailsViewController.details = LaunchDetailsViewModel(name: launch.flightNumber, details: launch.details, mainImage: launch.mainImage, dateUTC: launch.dateUTC, isMarked: launch.isMarked, wikiLink: launch.wikipedia)
+        launchDetailsViewController.updateImage(with: photoInteractor)
+        let navigationController = UINavigationController(rootViewController: launchDetailsViewController)
         present(navigationController, animated: true, completion: nil)
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.launchData.count - 1 {
+            viewModel.fetchAndSaveLaunches { resualt in
+                switch resualt {
+                case .success(_):
+                    print("bbinim chi mishe")
+                case .failure(_):
+                    print("ey babababa")
+                }
+            }
+        }
     }
 }

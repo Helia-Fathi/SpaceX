@@ -12,9 +12,8 @@ typealias CodableObject = Object
 
 protocol DataBaseManagerProtocol {
     func addObject(objects: [CodableObject]) throws
-    func fetchAll<T: Object>(type: T.Type, offset: Int, limit: Int) throws -> [T]
-//    func fetchAll<T: CodableObject>(type: T.Type) throws -> Results<T>?
-    func getObject<T: CodableObject>(type: T.Type, key: Int) -> T?
+    func fetchAll<T: CodableObject>(type: T.Type) throws -> Results<T>?
+    func getObject<T: CodableObject>(type: T.Type, key: String) -> T?
     func deleteObject<T: CodableObject>(type: T.Type, by primaryKey: String)
     func removeAll<T: CodableObject>(type: T.Type) throws
     func updateObject<T: CodableObject>(object: T) throws
@@ -45,9 +44,9 @@ final class DataBaseManager: DataBaseManagerProtocol {
     }
     
     // MARK: - fetch
-//    func fetchAll<T: CodableObject>(type: T.Type) throws -> Results<T>? {
-//        return realm.objects(type)
-//    }
+    func fetchAll<T: CodableObject>(type: T.Type) throws -> Results<T>? {
+        return realm.objects(type)
+    }
     
     func fetchAll<T: Object>(type: T.Type, offset: Int, limit: Int) throws -> [T] {
         let results = realm.objects(type)
@@ -55,7 +54,7 @@ final class DataBaseManager: DataBaseManagerProtocol {
         return paginatedResults
     }
     
-    func getObject<T: CodableObject>(type: T.Type, key: Int) -> T? {
+    func getObject<T: CodableObject>(type: T.Type, key: String) -> T? {
         return realm.object(ofType: type, forPrimaryKey: key)
     }
     

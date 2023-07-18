@@ -39,6 +39,15 @@ class DependencyInjection{
             NetworkService()
         }.inObjectScope(.container)
         
+//        // MARK: - Realm
+        container.register(DataBaseProviderProtocol.self) { _ in
+            DataBaseProvider()
+        }.inObjectScope(.container)
+        
+        container.register(DataBaseManagerProtocol.self) { _ in
+            DataBaseManager()
+        }.inObjectScope(.container)
+        
         return container
     }
     

@@ -16,3 +16,6 @@ struct LaunchDetailsViewModel {
     let wikiLink: String?
 }
 
+struct MarkMissionModel {
+    let flightNumber: String
+}
