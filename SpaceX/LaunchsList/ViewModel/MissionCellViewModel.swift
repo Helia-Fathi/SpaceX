@@ -15,12 +15,17 @@ struct MissionCellViewModel {
     let dateUTC: String?
     let isMarked: Bool
     
-    init(launch: LaunchRealm) {
-        self.flightNumber = String(launch.flightNumber)
-        self.details = launch.details ?? ""
-        self.success = launch.success
-        self.smallImageURL = launch.smallImageURL
-        self.dateUTC = launch.dateUTC
-        self.isMarked = launch.isMarked
+    init?(response: [String: Any]) {
+        guard let flightNumber = response["flight_number"] as? Int else { return nil }
+        self.flightNumber = "Flight \(flightNumber)"
+        self.details = response["details"] as? String ?? "No details available"
+        self.success = response["success"] as? Bool ?? false
+        if let links = response["links"] as? [String: Any], let patch = links["patch"] as? [String: String] {
+            self.smallImageURL = patch["small"]
+        } else {
+            self.smallImageURL = nil
+        }
+        self.dateUTC = response["date_utc"] as? String
+        self.isMarked = true
     }
 }

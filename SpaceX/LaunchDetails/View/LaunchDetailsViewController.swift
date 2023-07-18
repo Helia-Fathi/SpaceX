@@ -16,6 +16,8 @@ class LaunchDetailsViewController: UIViewController {
 
     }
     
+    @Published var details: LaunchDetailsViewModel?
+    
     private let missionMainImage: UIImageView = {
         var imageView = UIImageView()
         imageView.isUserInteractionEnabled = false

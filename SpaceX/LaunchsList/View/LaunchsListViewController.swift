@@ -9,20 +9,24 @@ import UIKit
 
 class LaunchsListViewController: UIViewController {
 
-    lazy var viewModel = {
-        LaunchViewModel()
-    }()
-    
+    var viewModel = LaunchViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(launchsListTableView)
         
         launchsListTableView.delegate = self
         launchsListTableView.dataSource = self
+
+        self.viewModel.fetchAndSaveLaunches(pageNumber: 4) { resual in
+            switch resual {
+            case .success(let data):
+                print(data.docs)
+            case .failure(_):
+                print("helia")
+            }
+        }
         
-//        viewModel.fetchLaunchesFromDB()
-//        viewModel.fetchAndSaveLaunches(pageNumber: 1)
-        viewModel.fetchLaunches()
         viewModel.$isLoading
             .filter { !$0 }
             .receive(on: DispatchQueue.main)
@@ -37,9 +41,7 @@ class LaunchsListViewController: UIViewController {
                 self?.launchsListTableView.reloadData()
             }
             .store(in: &viewModel.cancellables)
-        
         launchsListTableView.reloadData()
-
         configUIElements()
     }
 
@@ -54,17 +56,17 @@ class LaunchsListViewController: UIViewController {
     
     func configUIElements() {
         NSLayoutConstraint.activate([
-            launchsListTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 48),
-            launchsListTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
-            launchsListTableView.rightAnchor.constraint(equalTo: view.rightAnchor,  constant: -24),
-            launchsListTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 48)
+            launchsListTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            launchsListTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            launchsListTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            launchsListTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
 
 extension LaunchsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.isLoading ? 0 : viewModel.launchData.count
+        return viewModel.launchData.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
@@ -76,5 +78,13 @@ extension LaunchsListViewController: UITableViewDelegate, UITableViewDataSource 
         let launch = viewModel.launchData[indexPath.row]
         cell.configure(with: launch)
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let launch = viewModel.launchData[indexPath.row]
+        let launchDetailsViewController = LaunchDetailsViewController()
+        launchDetailsViewController.details = LaunchDetailsViewModel(name: launch.flightNumber, details: launch.details, mainImage: launch.smallImageURL, dateUTC: launch.dateUTC, isMarked: launch.isMarked, wikiLink: nil)
+        let navigationController = UINavigationController(rootViewController: self)
+        present(navigationController, animated: true, completion: nil)
+        
     }
 }

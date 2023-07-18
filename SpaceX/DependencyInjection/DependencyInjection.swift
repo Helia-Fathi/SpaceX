@@ -21,7 +21,7 @@ class Resolver {
     private var container = DependencyInjection.makeContainer()
     
     func resolve<T>(_ type: T.Type) -> T {
-        container.resolve(T.self)!
+        return container.resolve(type)!
     }
     
     func setDependencyContainer(_ container: Container) {
@@ -39,22 +39,7 @@ class DependencyInjection{
             NetworkService()
         }.inObjectScope(.container)
         
-        // MARK: - Realm
-        container.register(DataBaseProviderProtocol.self) { _ in
-            DataBaseProvider()
-        }.inObjectScope(.container)
-        
-        container.register(DataBaseManagerProtocol.self) { _ in
-            DataBaseManager()
-        }.inObjectScope(.container)
-        
-        //MARK: - Repository
-        container.register(LaunchRepositoryProtocol.self) { _ in
-            LaunchRepository()
-        }.inObjectScope(.container)
-       
         return container
     }
     
 }
-

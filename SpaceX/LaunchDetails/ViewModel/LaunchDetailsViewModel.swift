@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 struct LaunchDetailsViewModel {
     let name: String
     let details: String
@@ -16,13 +14,5 @@ struct LaunchDetailsViewModel {
     let dateUTC: String?
     let isMarked: Bool
     let wikiLink: String?
-    
-    init(launch: LaunchRealm) {
-        self.name = launch.name
-        self.details = launch.details ?? ""
-        self.mainImage = launch.mainImages
-        self.dateUTC = launch.dateUTC
-        self.isMarked = launch.isMarked
-        self.wikiLink = launch.wikipedia
-    }
 }
+

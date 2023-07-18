@@ -10,53 +10,63 @@ import Foundation
 import Combine
 
 protocol NetworkServiceProtocol {
-    func request<T: Decodable>(_ endpoint: APIEndpoint) -> AnyPublisher<T, APIError>
-//    func request<T: Decodable>(_ endpoint: APIEndpoint, completion: @escaping (Result<T, APIError>) -> Void)
-    
+    func request(endpoint: APIEndpoint, completion: @escaping (Result<Data, APIError>) -> Void)
 }
 
 class NetworkService: NetworkServiceProtocol {
     private let urlSession: URLSession
     private let baseURL: URL
     
+    private var myDispatcher = DispatchQueue.global(qos: .background)
     init(baseURL: URL = URL(string: APIConfiguration.baseURL)!, urlSession: URLSession = .shared) {
         self.baseURL = baseURL
         self.urlSession = urlSession
     }
     
-    func request<T: Decodable>(_ endpoint: APIEndpoint) -> AnyPublisher<T, APIError> {
-        let url = baseURL.appendingPathComponent(endpoint.path)
-
-        var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method.rawValue
-        request.allHTTPHeaderFields = endpoint.headers
-        request.httpBody = endpoint.body
-        request.timeoutInterval = TimeInterval(120)
-
-        return urlSession.dataTaskPublisher(for: request)
-            .tryMap { output in
-                guard let response = output.response as? HTTPURLResponse else {
-                    throw APIError.noResponse
-                }
-
-                guard (200...299).contains(response.statusCode) else {
-                    switch response.statusCode {
-                    case 400: throw APIError.badRequest
-                    case 401: throw APIError.unauthorized
-                    case 404: throw APIError.notFound
-                    case 500: throw APIError.internalServerError
-                    case 503: throw APIError.serverDown
-                    default: throw APIError.unknown
+    func request(endpoint: APIEndpoint, completion: @escaping (Result<Data, APIError>) -> Void) {
+        myDispatcher.async {
+            
+            let url = self.baseURL.appendingPathComponent(endpoint.path)
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = endpoint.method.rawValue
+            request.allHTTPHeaderFields = endpoint.headers
+            request.httpBody = endpoint.body
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    if let urlError = error as? URLError {
+                        completion(.failure(APIError.unauthorized))
+                    } else {
+                        completion(.failure(APIError.unknown))
                     }
+                    return
                 }
-                print("khoda : \(output.data)")
-                let json = try JSONSerialization.jsonObject(with: output.data, options: [])
-                print("ey babababa", json)
-
-                return output.data
-            }
-            .decode(type: T.self, decoder: JSONDecoder())
-            .mapError { $0 as? APIError ?? APIError.unknown }
-            .eraseToAnyPublisher()
+                
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    completion(.failure(APIError.noResponse))
+                    return
+                }
+                guard (200...299).contains(httpResponse.statusCode) else {
+                    switch httpResponse.statusCode {
+                    case 400: completion(.failure(APIError.badRequest))
+                    case 401: completion(.failure(APIError.unauthorized))
+                    case 404: completion(.failure(APIError.notFound))
+                    case 500: completion(.failure(APIError.internalServerError))
+                    case 503: completion(.failure(APIError.serverDown))
+                    default: completion(.failure(APIError.unknown))
+                    }
+                    return
+                }
+                
+                guard let d = data else {
+                    completion(.failure(APIError.unknown))
+                    return
+                }
+                
+                completion(.success(d))
+            }.resume()
+        }
     }
+    
 }

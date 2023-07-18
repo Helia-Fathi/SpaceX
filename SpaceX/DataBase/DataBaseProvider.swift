@@ -7,73 +7,73 @@
 
 import Foundation
 
-protocol DataBaseProviderProtocol {
-    func saveLaunches(launches: [SpaceXResponse])
-    func fetchLaunches(offset: Int, limit: Int) -> [MissionCellViewModel]?
-//    func fetchLaunches() -> [MissionCellViewModel]
-//    func fetchLaunchDetails(flightNumber: Int) -> Launch?
-    func markLaunch(flightNumber: Int, isMarked: Bool)
-}
-
-class DataBaseProvider: DataBaseProviderProtocol {
-    
-    @Inject private var dataBaseManager: DataBaseManagerProtocol
-    
-    func saveLaunches(launches: [SpaceXResponse]) {
-        do {
-            let object = mapToLaunchObjects(launches)
-            try self.dataBaseManager.addObject(objects: object)
-        } catch let error as NSError {
-            print("Couldn't save to db \(error)")
-        }
-    }
-    
-//    func fetchLaunches() -> [MissionCellViewModel] {
-//        var launchList = [MissionCellViewModel]()
+//protocol DataBaseProviderProtocol {
+//    func saveLaunches(launches: [SpaceXResponse])
+//    func fetchLaunches(offset: Int, limit: Int) -> [MissionCellViewModel]?
+////    func fetchLaunches() -> [MissionCellViewModel]
+////    func fetchLaunchDetails(flightNumber: Int) -> Launch?
+//    func markLaunch(flightNumber: Int, isMarked: Bool)
+//}
+//
+//class DataBaseProvider: DataBaseProviderProtocol {
+//    
+//    @Inject private var dataBaseManager: DataBaseManagerProtocol
+//    
+//    func saveLaunches(launches: [SpaceXResponse]) {
 //        do {
-//            let launch = try dataBaseManager.fetchAll(type: LaunchRealm.self)
-//            launchList = mapToMissionCellViewModels(launchRealms: Array(launch!))
-//            return launchList
+//            let object = mapToLaunchObjects(launches)
+//            try self.dataBaseManager.addObject(objects: object)
 //        } catch let error as NSError {
-//            print("\(error.description)")
+//            print("Couldn't save to db \(error)")
 //        }
-//        return launchList
 //    }
-    
-    func fetchLaunches(offset: Int, limit: Int) -> [MissionCellViewModel]? {
-        do {
-            let launches: [LaunchRealm] = try self.dataBaseManager.fetchAll(type: LaunchRealm.self, offset: offset, limit: limit)
-            let missionCellViewModels = mapToMissionCellViewModels(launchRealms: launches)
-            return missionCellViewModels
-        } catch let error as NSError {
-            print("Couldn't fetch: \(error)")
-        }
-        return nil
-    }
-    
-//    func fetchLaunchDetails(flightNumber: Int) -> Launch? {
+//    
+////    func fetchLaunches() -> [MissionCellViewModel] {
+////        var launchList = [MissionCellViewModel]()
+////        do {
+////            let launch = try dataBaseManager.fetchAll(type: LaunchRealm.self)
+////            launchList = mapToMissionCellViewModels(launchRealms: Array(launch!))
+////            return launchList
+////        } catch let error as NSError {
+////            print("\(error.description)")
+////        }
+////        return launchList
+////    }
+//    
+//    func fetchLaunches(offset: Int, limit: Int) -> [MissionCellViewModel]? {
 //        do {
-//            if let launchRealm = try dataBaseManager.getObject(type: LaunchRealm.self, key: flightNumber) {
-//                let launchList = mapToLaunchLists(launchRealm: [launchRealm], includeDetails: true)
-//                return launchList.first
-//            }
+//            let launches: [LaunchRealm] = try self.dataBaseManager.fetchAll(type: LaunchRealm.self, offset: offset, limit: limit)
+//            let missionCellViewModels = mapToMissionCellViewModels(launchRealms: launches)
+//            return missionCellViewModels
 //        } catch let error as NSError {
-//            print("\(error.description)")
+//            print("Couldn't fetch: \(error)")
 //        }
 //        return nil
 //    }
-    
-    func markLaunch(flightNumber: Int, isMarked: Bool) {
-        if let launch = dataBaseManager.getObject(type: LaunchRealm.self, key: flightNumber) {
-            do {
-                try dataBaseManager.update {
-                    launch.isMarked = isMarked
-                }
-            } catch let error as NSError {
-                print("Couldn't mark launch: \(error)")
-            }
-        }
-    }
-
-
-}
+//    
+////    func fetchLaunchDetails(flightNumber: Int) -> Launch? {
+////        do {
+////            if let launchRealm = try dataBaseManager.getObject(type: LaunchRealm.self, key: flightNumber) {
+////                let launchList = mapToLaunchLists(launchRealm: [launchRealm], includeDetails: true)
+////                return launchList.first
+////            }
+////        } catch let error as NSError {
+////            print("\(error.description)")
+////        }
+////        return nil
+////    }
+//    
+//    func markLaunch(flightNumber: Int, isMarked: Bool) {
+//        if let launch = dataBaseManager.getObject(type: LaunchRealm.self, key: flightNumber) {
+//            do {
+//                try dataBaseManager.update {
+//                    launch.isMarked = isMarked
+//                }
+//            } catch let error as NSError {
+//                print("Couldn't mark launch: \(error)")
+//            }
+//        }
+//    }
+//
+//
+//}

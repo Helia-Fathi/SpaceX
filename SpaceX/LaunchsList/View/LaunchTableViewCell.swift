@@ -11,7 +11,7 @@ import UIKit
 class LaunchTableViewCell: UITableViewCell {
     
     static let identifier = String(describing: LaunchTableViewCell.self)
-    let cellMargins = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 0.0, right: -8.0)
+    let cellMargins = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     
     private let missionIcon: UIImageView = {
         var imageView = UIImageView()
@@ -29,7 +29,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.backgroundColor = .white
+        label.backgroundColor = .red
         label.textColor = .yellow
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -49,7 +49,7 @@ class LaunchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.textAlignment = .left
-        label.backgroundColor = .green
+        label.backgroundColor = .purple
         label.textColor = .white
         label.textAlignment = .center
         label.layer.masksToBounds = true
@@ -71,6 +71,7 @@ class LaunchTableViewCell: UITableViewCell {
         var imageView = UIImageView()
         imageView.isUserInteractionEnabled = false
         imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "mark")
         imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,35 +98,35 @@ class LaunchTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            isMarked.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            isMarked.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            isMarked.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            isMarked.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             isMarked.widthAnchor.constraint(equalToConstant: 24),
-            isMarked.heightAnchor.constraint(equalToConstant: 12),
+            isMarked.heightAnchor.constraint(equalToConstant: 16),
             
-            missionIcon.leadingAnchor.constraint(equalTo: isMarked.trailingAnchor, constant: 32),
+            missionIcon.leadingAnchor.constraint(equalTo: isMarked.trailingAnchor, constant: 4),
             missionIcon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            missionIcon.widthAnchor.constraint(equalToConstant: 40),
-            missionIcon.heightAnchor.constraint(equalToConstant: 40),
+            missionIcon.widthAnchor.constraint(equalToConstant: 60),
+            missionIcon.heightAnchor.constraint(equalToConstant: 60),
             
-            flightNumber.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64),
-            flightNumber.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
-            flightNumber.widthAnchor.constraint(equalToConstant: 24),
-            flightNumber.heightAnchor.constraint(equalToConstant: 12),
+            flightNumber.leadingAnchor.constraint(equalTo: missionIcon.trailingAnchor, constant: 16),
+            flightNumber.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            flightNumber.widthAnchor.constraint(equalToConstant: 80),
+            flightNumber.heightAnchor.constraint(equalToConstant: 24),
             
-            minorDetails.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64),
-            minorDetails.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 40),
-            minorDetails.widthAnchor.constraint(equalToConstant: 24),
-            minorDetails.heightAnchor.constraint(equalToConstant: 12),
-            
-            launchDate.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 80),
-            launchDate.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
-            launchDate.widthAnchor.constraint(equalToConstant: 24),
-            launchDate.heightAnchor.constraint(equalToConstant: 12),
-            
+            minorDetails.topAnchor.constraint(equalTo: flightNumber.bottomAnchor, constant: 8),
+            minorDetails.leadingAnchor.constraint(equalTo: missionIcon.trailingAnchor, constant: 16),
+            minorDetails.widthAnchor.constraint(equalToConstant: 160),
+            minorDetails.heightAnchor.constraint(equalToConstant: 24),
+ 
             successOrFail.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            successOrFail.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            successOrFail.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             successOrFail.widthAnchor.constraint(equalToConstant: 20),
-            successOrFail.heightAnchor.constraint(equalToConstant: 20)
+            successOrFail.heightAnchor.constraint(equalToConstant: 20),
+            
+            launchDate.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            launchDate.topAnchor.constraint(equalTo: successOrFail.bottomAnchor, constant: 8),
+            launchDate.widthAnchor.constraint(equalToConstant: 104),
+            launchDate.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
 
